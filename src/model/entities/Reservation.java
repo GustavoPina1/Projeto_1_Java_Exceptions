@@ -45,10 +45,19 @@ public class Reservation {
 		days=(int) ChronoUnit.DAYS.between(checkin, checkout);
 		return days;	
 	}
-	public void updateDates(LocalDate checkin,LocalDate checkout) {
+	public String updateDates(LocalDate checkin,LocalDate checkout) {
+		
+		if(checkin.isBefore(this.checkin) || checkout.isBefore(this.checkout)) {
+			return("Error in reservation: Reservation dates for update must be future dates");
+		}
+		else if(checkout.isBefore(checkin)) {
+			return("Error in reservation: Check-out date must be after check-in date");
+		}
 		this.checkin=checkin;
-		this.checkout=checkout;		
+		this.checkout=checkout;
+		return null;
 	}
+	
 	@Override
 	public String toString() {
 		
